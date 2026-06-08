@@ -1,9 +1,12 @@
 import React, { useState, useRef } from 'react'
 import Header from './Header'
 import { checkValidateEmail, checkValidateName, checkValidatePassword } from '../utils/validate';
+import { auth } from '../utils/firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [emailErrorMessage,setEmailErrorMessage] = useState(null);
   const [pwdErrorMessage,setPwdErrorMessage] = useState(null);
   const [nameErrorMessage,setNameErrorMessage] = useState(null);
@@ -22,6 +25,28 @@ const Login = () => {
     setEmailErrorMessage(checkValidateEmail(email?.current?.value));
     setPwdErrorMessage(checkValidatePassword(password?.current?.value));
     if(!isSignInForm) setNameErrorMessage(checkValidateName(name.current.value));
+    if(emailErrorMessage || pwdErrorMessage || nameErrorMessage) return null;
+    if(!isSignInForm){
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode + " - " + errorMessage);
+      })
+    }else{
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        setErrorMessage(error.code + " - " + error.message);
+      })
+    }
   }
 
   return (
@@ -49,6 +74,7 @@ const Login = () => {
         <input ref={password} className="p-3 my-3 w-full bg-gray-800 outline-none text-gray-400"  type='password' placeholder='Password' />
         <div className='text-red-500 font-bold text-sm'>{pwdErrorMessage}</div>
         </div>
+        <div className='text-red-500 font-bold text-sm'>{errorMessage}</div>
         <button  className="text-white bg-red-700 p-3 my-3 w-full rounded-lg cursor-pointer outline-none hover:bg-red-800 focus-visible:bg-red-1000" onClick={handleSubmitButton}>{isSignInForm ? "Sign In" : "Sign Up"}</button>
         <p className=" my-3 text-white text-sm">{isSignInForm ? "New to Netflix?" : "Already registed user!"} <span className='cursor-pointer hover: hover:underline hover:text-blue-500' onClick={toggleSignInForm}>{isSignInForm ? "Sign Up" : "Sign In"}</span> Now</p>
       </form>
