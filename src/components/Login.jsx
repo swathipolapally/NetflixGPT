@@ -2,7 +2,10 @@ import React, { useState, useRef } from 'react'
 import Header from './Header'
 import { checkValidateEmail, checkValidateName, checkValidatePassword } from '../utils/validate';
 import { auth } from '../utils/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/store/slices/userSlice';
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
@@ -10,6 +13,8 @@ const Login = () => {
   const [emailErrorMessage,setEmailErrorMessage] = useState(null);
   const [pwdErrorMessage,setPwdErrorMessage] = useState(null);
   const [nameErrorMessage,setNameErrorMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const email = useRef(null);
   const password = useRef(null);
@@ -31,6 +36,15 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+        updateProfile(auth.currentUser, {
+          displayName: name.current.value,
+        }).then(() => {
+          const {uid, email, displayName} = auth.currentUser;
+          dispatch(addUser({uid, email, displayName}));
+          navigate('/browse');
+        }).catch((error) => {
+          setErrorMessage(error.code + " - " + error.message);
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
