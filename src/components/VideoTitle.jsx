@@ -2,7 +2,7 @@
 
 const VideoTitle = ({mainMovie}) => {
     return (
-        <div className="absolute top-20 md:top-36 px-6 md:px-12 py-4 md:py-8 bg-gradient-to-r from-black text-white">
+        <div className="absolute top-20 md:top-36 left-0 z-20 px-6 md:px-12 py-4 md:py-8 bg-gradient-to-r from-black text-white">
             <h1 className="text-2xl md:text-5xl font-bold">{mainMovie?.original_title}</h1>
             <p className="text-sm md:text-lg mt-2 md:mt-4 max-w-xs md:max-w-lg">{mainMovie?.overview}</p>
             <div className="mt-4 md:mt-6">

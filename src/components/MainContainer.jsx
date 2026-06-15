@@ -14,9 +14,9 @@ const MainContainer = () => {
     console.log(mainMovie); // --- IGNORE ---
 
     return (
-        <div>
-            <VideoTitle mainMovie={mainMovie} />
+        <div className="relative">
             <VideoBackground movieId={id} />
+            <VideoTitle mainMovie={mainMovie} />
         </div>
     )
 }
