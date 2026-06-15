@@ -60,9 +60,9 @@ const Login = () => {
   }
 
   return (
-    <div className="relative min-h-screen pt-16">
+    <div className="relative min-h-screen pt-16 overflow-x-hidden overflow-y-auto">
       <Header />
-      <div className="fixed inset-0 -z-10">
+      <div className="absolute inset-0 -z-10">
         <img
           className="object-cover w-full h-full"
           src="https://assets.nflxext.com/ffe/siteui/vlv3/435e8bb8-7f1b-49cb-8da8-bff997124294/web/IN-en-20260511-TRIFECTA-perspective_ec39852e-0b48-4e8a-b415-dd8376cd83ce_small.jpg"
@@ -70,7 +70,7 @@ const Login = () => {
         />
       </div>
 
-      <form onSubmit={(event) => event.preventDefault()} className="relative w-4/12 mt-28 mb-36 mx-auto p-12 bg-black rounded-lg bg-opacity-80 z-20">
+      <form onSubmit={(event) => event.preventDefault()} className="relative w-full max-w-md sm:w-10/12 mt-28 mb-36 mx-auto p-8 sm:p-12 bg-black rounded-lg bg-opacity-80 z-20">
         <h1 className='text-3xl font-bold text-white p-3 my-3'>{isSignInForm ? "Sign In" : "Sign Up"}</h1>
         <div>
         <input ref={email} className="p-3 my-3 w-full bg-gray-800 outline-none text-gray-400" type='text' placeholder='Email Address' />        

@@ -13,6 +13,7 @@ import { LOGO, USER_AVATAR } from '../utils/constants';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
     const [isOpen, setIsOpen] = useState(false);
@@ -31,11 +32,30 @@ const Header = () => {
 
   }, []);
 
+  const isAuthPage = location.pathname === '/';
+  const isBrowsePage = location.pathname === '/browse';
+
+  
+
+  const headerClass = isAuthPage
+    ? 'bg-gradient-to-b to-transparent from-black'
+    : isBrowsePage
+      ?'bg-black' : '';
+
   return (
-    <div className="fixed top-0 left-0 flex items-center justify-between px-4 py-3 w-full bg-gradient-to-b to-transparent from-black z-50 h-16">
-      <img className="w-36" src= { LOGO}
-      alt='netflix-logo' />
+    <div className={`fixed top-0 left-0 flex items-center justify-between px-4 py-3 w-full z-50 h-16 transition-colors duration-300 ${headerClass}`}>
+      <img className="w-36" src={LOGO} alt='netflix-logo' />
       { user && 
+      <>
+      <ul className='text-white flex gap-3 p- flex-start justify-start align-start'>
+        <li>Home</li>
+        <li>Shows</li>
+        <li>Movies</li>
+        <li>Games</li>
+        <li>New  & Popular</li>
+        <li>My List</li>
+        <li>Browse By Languages</li>
+      </ul>
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -78,6 +98,7 @@ const Header = () => {
         </div>
         }
       </div>
+      </>
     }
     </div>
   )
