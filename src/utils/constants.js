@@ -10,4 +10,6 @@ const API_OPTIONS = {
   }
 };
 
-export { LOGO, USER_AVATAR, API_OPTIONS };
+const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
+
+export { LOGO, USER_AVATAR, API_OPTIONS, IMG_CDN_URL };
