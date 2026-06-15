@@ -20,3 +20,11 @@
 - Netflix GPT
     - Search Bar
     - Movie Suggestions
+
+- Plan
+    - Main Container (Main Movie)
+        - Video Background
+        - Video Title
+    - Second Container (Movie list)
+        - MovieList * n
+        - Cards * n

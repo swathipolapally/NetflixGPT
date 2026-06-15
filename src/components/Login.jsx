@@ -25,8 +25,6 @@ const Login = () => {
   }
 
   const handleSubmitButton = () => {
-    console.log(email.current.value);
-    console.log(password.current.value);
     setEmailErrorMessage(checkValidateEmail(email?.current?.value));
     setPwdErrorMessage(checkValidatePassword(password?.current?.value));
     if(!isSignInForm) setNameErrorMessage(checkValidateName(name.current.value));
@@ -35,7 +33,6 @@ const Login = () => {
       createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
         updateProfile(auth.currentUser, {
           displayName: name.current.value,
         }).then(() => {
@@ -55,7 +52,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email.current.value, password.current.value)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
       })
       .catch((error) => {
         setErrorMessage(error.code + " - " + error.message);
@@ -64,13 +60,17 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <Header/>
-      <div className="absolute">
-        <img src="https://assets.nflxext.com/ffe/siteui/vlv3/435e8bb8-7f1b-49cb-8da8-bff997124294/web/IN-en-20260511-TRIFECTA-perspective_ec39852e-0b48-4e8a-b415-dd8376cd83ce_small.jpg"
-        alt='bg-image'/>
+    <div className="relative min-h-screen pt-16">
+      <Header />
+      <div className="fixed inset-0 -z-10">
+        <img
+          className="object-cover w-full h-full"
+          src="https://assets.nflxext.com/ffe/siteui/vlv3/435e8bb8-7f1b-49cb-8da8-bff997124294/web/IN-en-20260511-TRIFECTA-perspective_ec39852e-0b48-4e8a-b415-dd8376cd83ce_small.jpg"
+          alt="bg-image"
+        />
       </div>
-      <form onSubmit={(event) => event.preventDefault()} className="absolute w-4/12 my-36 mx-auto right-0 left-0 p-12 bg-black rounded-lg bg-opacity-80">
+
+      <form onSubmit={(event) => event.preventDefault()} className="relative w-4/12 mt-28 mb-36 mx-auto p-12 bg-black rounded-lg bg-opacity-80 z-20">
         <h1 className='text-3xl font-bold text-white p-3 my-3'>{isSignInForm ? "Sign In" : "Sign Up"}</h1>
         <div>
         <input ref={email} className="p-3 my-3 w-full bg-gray-800 outline-none text-gray-400" type='text' placeholder='Email Address' />        

@@ -1,26 +1,22 @@
 import React from 'react'
 import Header from './Header';
-import { API_OPTIONS } from '../utils/constants';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addNowPlayingMovies } from '../utils/store/slices/movieSlice';
+import useNowPlayingMovies from '../utils/hooks/useNowPlayingMoviesHook';
+import MainContainer from './MainContainer';
+import SecondaryContainer from './SecondaryContainer';
 
 const Browse = () => {
-  const dispatch = useDispatch();
-
-  const getNOwPlayingMovies = async () => {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?page`, API_OPTIONS);
-    const data = await response.json();
-    dispatch(addNowPlayingMovies(data.results));
-  }
-
-  useEffect(() => {
-    getNOwPlayingMovies();
-  }, []);
+  /**
+   * Fetch now playing movies from TMDB API and store it in Redux store
+   */
+  useNowPlayingMovies();
 
   return (
-    <div>
+    <div className="relative min-h-screen overflow-x-hidden">
       <Header />
+      <div className="relative z-10">
+        <MainContainer />
+        <SecondaryContainer />
+      </div>
     </div>
   )
 }

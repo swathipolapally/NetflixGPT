@@ -21,7 +21,6 @@ const Header = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const {uid, email, displayName} = user;
-        console.log(user);
         dispatch(addUser({uid, email, displayName}));
         navigate('/browse');
       } else {
@@ -33,14 +32,14 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="flex justify-between absolute p-2 w-full bg-gradient-to-b to-transparent from-black z-10">
+    <div className="fixed top-0 left-0 flex items-center justify-between px-4 py-3 w-full bg-gradient-to-b to-transparent from-black z-50 h-16">
       <img className="w-36" src= { LOGO}
       alt='netflix-logo' />
       { user && 
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-content px-4 py-3"
+          className="flex items-center px-4 py-2"
         >
           <div className="p-2 px-2 ">{user?.displayName}</div>
           <img className="w-8 h-8 rounded-md" src={ USER_AVATAR } alt="User Avatar" />
